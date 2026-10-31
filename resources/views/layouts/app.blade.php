@@ -460,7 +460,11 @@
                 <span><i class="bi bi-tree-fill text-success me-1"></i> បទពិសោធន៍សម្រាកលំហែបែបធម្មជាតិ 🌿</span>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <span><i class="bi bi-telephone-fill text-warning me-1"></i> ទំនាក់ទំនង៖ <strong>067 636 262 / 010 824 444 / 010 482 345</strong></span>
+                <a href="#locationQrModal" data-bs-toggle="modal" class="text-warning text-decoration-none fw-semibold">
+                    <i class="bi bi-qr-code-scan me-1"></i> ស្កេនរកទីតាំង (QR Code)
+                </a>
+                <span class="opacity-50">|</span>
+                <span><i class="bi bi-telephone-fill text-warning me-1"></i> <strong>067 636 262 / 010 824 444</strong></span>
             </div>
         </div>
     </div>
@@ -486,7 +490,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4 gap-1">
                     <li class="nav-item">
                         <a class="nav-link-sct {{ request()->routeIs('rooms.index') ? 'active' : '' }}" href="{{ route('rooms.index') }}">
-                            <i class="bi bi-grid-fill"></i> បញ្ជីបន្ទប់ (Rooms Directory)
+                            <i class="bi bi-grid-fill"></i> បញ្ជីបន្ទប់ (Directory)
                         </a>
                     </li>
                     <li class="nav-item">
@@ -496,7 +500,13 @@
                     </li>
                 </ul>
 
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <!-- Location QR Modal Trigger Button -->
+                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#locationQrModal">
+                        <i class="bi bi-qr-code-scan"></i>
+                        <span>QR ទីតាំង (Location)</span>
+                    </button>
+
                     <div class="d-flex align-items-center gap-2 bg-light px-3 py-1 rounded-pill border">
                         <span class="status-dot-pulse-sct"></span>
                         <i class="bi bi-person-circle text-success"></i>
@@ -506,7 +516,7 @@
                     <form action="{{ route('logout') }}" method="POST" class="m-0">
                         @csrf
                         <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center gap-1">
-                            <i class="bi bi-box-arrow-right"></i> ចាកចេញ (Logout)
+                            <i class="bi bi-box-arrow-right"></i> Logout
                         </button>
                     </form>
                 </div>
@@ -548,6 +558,79 @@
             @yield('content')
         </div>
     </main>
+
+    <!-- Location QR Code Modal (Slide-up Interactive Lightbox) -->
+    <div class="modal fade" id="locationQrModal" tabindex="-1" aria-labelledby="locationQrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header text-white py-3" style="background: var(--sct-emerald-gradient);">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="sct-logo-badge" style="width: 36px; height: 36px; font-size: 0.95rem;">SCT</span>
+                        <div>
+                            <h5 class="modal-title fw-bold mb-0" id="locationQrModalLabel">ស្កេនដើម្បីរកទីតាំង</h5>
+                            <small class="text-white-50">SCT Chan Thorn Location QR Code</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body text-center p-4">
+                    <div class="p-3 bg-light rounded-4 d-inline-block border shadow-sm mb-3 position-relative">
+                        <img src="{{ asset('images/sct-location-qr.png') }}" alt="SCT Location QR Code" class="img-fluid rounded-3" style="max-width: 220px; width: 100%;">
+                        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-2">
+                            <span class="badge bg-dark bg-opacity-75 text-white px-3 py-1 rounded-pill small">
+                                <i class="bi bi-camera me-1"></i> Scan with Phone
+                            </span>
+                        </div>
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-1">ផ្ទះសំណាក់ ចាន់ថន (SCT)</h5>
+                    <p class="text-muted small mb-3">
+                        <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                        ទីតាំងល្អ៖ ជិតវិទ្យាល័យស្វាយរៀង ទីរួមខេត្តស្វាយរៀង
+                    </p>
+
+                    <div class="p-3 rounded-3 mb-3 text-start small border" style="background: #e6f4ef; color: #062c21;">
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <i class="bi bi-telephone-fill text-warning"></i>
+                            <strong>ទូរស័ព្ទទាក់ទង៖</strong> 067 636 262 / 010 824 444 / 010 482 345
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-tree-fill text-success"></i>
+                            <span>បរិយាកាសស្ងប់ស្ងាត់ ស្រស់ស្រាយ បែបធម្មជាតិ</span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                        <a href="https://maps.google.com/?q=Svay+Rieng+High+School,+Svay+Rieng" target="_blank" class="btn btn-sct-gold">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span>បើកក្នុង Google Maps</span>
+                        </a>
+
+                        <button type="button" class="btn btn-sct-outline" data-bs-toggle="modal" data-bs-target="#fullPosterModal">
+                            <i class="bi bi-image"></i>
+                            <span>មើលផ្ទាំងផ្សាយពាណិជ្ជកម្ម</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Poster Modal -->
+    <div class="modal fade" id="fullPosterModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header py-2 text-white" style="background: var(--sct-emerald-gradient);">
+                    <h6 class="modal-title fw-bold">ផ្ទាំងផ្សាយពាណិជ្ជកម្ម &bull; ផ្ទះសំណាក់ ចាន់ថន (SCT Poster)</h6>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center p-2 bg-dark">
+                    <img src="{{ asset('images/sct-poster.jpg') }}" alt="SCT Full Poster" class="img-fluid rounded-3" style="max-height: 80vh;">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="footer-sct text-center">
         <div class="container">

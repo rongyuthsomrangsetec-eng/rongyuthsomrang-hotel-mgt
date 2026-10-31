@@ -87,16 +87,29 @@
                 </div>
             </div>
 
-            <!-- Hotel Contact from Poster -->
-            <div class="p-3 rounded-3 mb-4 bg-light border d-flex flex-wrap align-items-center justify-content-between gap-2">
-                <div>
-                    <i class="bi bi-geo-alt-fill text-warning me-1"></i>
-                    <strong>ទីតាំង៖</strong> ជិតវិទ្យាល័យស្វាយរៀង ទីរួមខេត្តស្វាយរៀង
+            <!-- Hotel Location & QR Code Banner from Poster -->
+            <div class="p-3 rounded-4 mb-4 bg-light border d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#locationQrModal" data-bs-toggle="modal">
+                        <img src="{{ asset('images/sct-location-qr.png') }}" alt="QR Code Location" class="rounded border shadow-sm" style="width: 75px; height: 75px; object-fit: cover;">
+                    </a>
+                    <div>
+                        <div class="fw-bold text-dark">
+                            <i class="bi bi-geo-alt-fill text-danger me-1"></i>
+                            ទីតាំង៖ ជិតវិទ្យាល័យស្វាយរៀង ទីរួមខេត្តស្វាយរៀង
+                        </div>
+                        <div class="text-muted small mt-1">
+                            <i class="bi bi-telephone-fill text-warning me-1"></i>
+                            ទូរស័ព្ទទាក់ទង៖ <strong>067 636 262 / 010 824 444 / 010 482 345</strong>
+                        </div>
+                        <small class="text-success fw-bold">ស្កេនដើម្បីរកទីតាំងក្នុង Google Maps</small>
+                    </div>
                 </div>
-                <div>
-                    <i class="bi bi-telephone-fill text-success me-1"></i>
-                    <strong>ទូរស័ព្ទ៖</strong> 067 636 262 / 010 824 444
-                </div>
+
+                <button type="button" class="btn btn-sct-gold btn-sm" data-bs-toggle="modal" data-bs-target="#locationQrModal">
+                    <i class="bi bi-qr-code-scan"></i>
+                    <span>ពង្រីក QR ទីតាំង</span>
+                </button>
             </div>
 
             <div class="text-muted small border-top pt-3 mb-4 d-flex flex-wrap gap-4">
