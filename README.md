@@ -1,58 +1,114 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏨 Hotel Management System — Laravel 13 Final Exam Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Student Name:** Rong Yuthsomrang  
+**Framework:** Laravel 13 (PHP 8.3+)  
+**Database:** SQLite / MySQL Relational Schema  
+**Selected Topic:** 5. Hotel Management System  
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 📌 Project Overview & Requirements Fulfillment
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project completely fulfills all requirements for the **FINAL PROJECT EXAM LARAVEL 13**:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| # | Exam Requirement | Implementation in this Project |
+|---|---|---|
+| **1** | **CREATE LARAVEL LOGIN & Register Form** | `views/login.blade.php` and `views/register.blade.php` styled with the exact clean card layout shown in Slides 4 & 5. Handled by `AuthController` with session regeneration, validation, and route authentication protection. |
+| **2** | **CREATE Migration Relationship tables & connect model** | Parent table `room_types` (PK) and Child table `rooms` (FK: `room_type_id`). Connected via Eloquent: `RoomType hasMany Room` and `Room belongsTo RoomType`. Includes seeders for test data. |
+| **3** | **CREATE CRUD OPERATION SYSTEM WITH FILTER AND SEARCH** | Complete CRUD operations for Rooms with real-time keyword search, Room Type filter, Room Status filter, Multi-criteria sorting, and responsive pagination matching Slides 6 & 7. |
+| **4** | **Push Source Code to GitHub** | Fully structured Git repository with `.gitignore` ready to connect to your remote GitHub repository. |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🗄️ Database Architecture & Migrations
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Parent Table: `room_types`
+- `id` (Primary Key, BigIncrements)
+- `name` (String: e.g. *Deluxe Double, Executive King, Family Suite*)
+- `base_price` (Decimal 10,2)
+- `capacity` (Integer: max guest capacity)
+- `description` (Text, nullable)
+- `created_at`, `updated_at` (Timestamps)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 2. Child Table: `rooms`
+- `id` (Primary Key, BigIncrements)
+- `room_number` (String, Unique: e.g. *101, 201, 301, 501*)
+- `room_type_id` (**Foreign Key** referencing `room_types.id` on delete cascade)
+- `price_per_night` (Decimal 10,2)
+- `floor` (String: e.g. *1st Floor, 2nd Floor, Penthouse*)
+- `status` (String/Enum: *Available*, *Occupied*, *Maintenance*)
+- `description` (Text, nullable: amenities & features)
+- `created_at`, `updated_at` (Timestamps)
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 🚀 Quick Setup & How to Run
 
+### 1. Database Migration & Seed
+Run migrations and load the realistic seed data:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+php artisan migrate --seed
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Default Test Credentials
+- **Admin Email:** `adminwoman@gmail.com` *(matching slide 4)* or `admin@hotel.com`
+- **Password:** `password`
 
-## Contributing
+### 3. Start Development Server
+```bash
+php artisan serve
+```
+Then open: **`http://127.0.0.1:8000`** in your browser.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🖥️ Screen Guide & Features
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+1. **Login Page (`/login`)**:
+   - Styled exactly like **Slide 4** of the exam requirements.
+   - Clean, centered card with email, password, and remember me.
 
-## Security Vulnerabilities
+2. **Register Page (`/register`)**:
+   - Styled exactly like **Slide 5** of the exam requirements.
+   - Name, email, and password registration with immediate auto-login.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+3. **Room Directory Page (`/rooms`)**:
+   - Styled exactly like **Slide 7** of the exam requirements.
+   - **3 Top KPI Stat Cards**: Total Rooms, Total Room Types, Available Rooms.
+   - **Search Input**: Instant search by room number, floor, or amenities.
+   - **Filters**:
+     - Filter by Room Type (*All, Deluxe Double, Executive King...*)
+     - Filter by Status (*All, Available, Occupied, Maintenance*)
+     - Sort by (*Newest First, Oldest First, Price: Low to High, Price: High to Low, Room Number*)
+   - **Actions**: View details modal/page, Edit room, and Delete with safe confirmation modal.
+   - **Pagination**: Fully responsive Bootstrap 5 pagination.
 
-## License
+4. **Room Registration Form (`/rooms/create`)**:
+   - Styled exactly like **Slide 6** of the exam requirements.
+   - Blue hero gradient header.
+   - Dynamic `<select>` dropdown populated from relational `room_types` table.
+   - Auto-suggests base price upon room type selection.
+   - Reset form button and link back to list.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📹 Video Demo Script (for YouTube / MP4 submission)
+
+When recording your demo video (similar to the teacher's YouTube demo `https://youtu.be/G8cXgRRYcPY`):
+1. **Show Login / Register**:
+   - Open `http://127.0.0.1:8000/login`.
+   - Log in with `adminwoman@gmail.com` / `password`.
+2. **Show Database Relationship (dbForge / HeidiSQL / SQLite / PhpMyAdmin)**:
+   - Display `room_types` table and `rooms` table with foreign key `room_type_id`.
+3. **Show Room Directory**:
+   - Point out the 3 Stat KPI cards.
+   - Demonstrate the Search bar by typing `101` or `Penthouse`.
+   - Demonstrate the Filters (e.g. Filter by "Available" or "Deluxe Double").
+4. **Demonstrate CRUD**:
+   - **Create**: Add a new room (e.g., Room 601, Presidential Penthouse, $500, Available).
+   - **Read**: View the room details page.
+   - **Update**: Edit Room 601 price or status to "Occupied".
+   - **Delete**: Delete the test room using the confirmation modal.
+5. **Show Code Structure**:
+   - Show `migrations`, `app/Models/Room.php` (`belongsTo`), `app/Models/RoomType.php` (`hasMany`).
+   - Show `AuthController.php`, `RoomController.php`, and `resources/views/rooms`.
