@@ -210,7 +210,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('login') }}" method="POST">
+            <form action="" method="POST">
                 @csrf
 
                 <div class="mb-3">

@@ -192,7 +192,7 @@
                 </div>
             @endif
 
-            <form action="{{ route('register') }}" method="POST">
+            <form action="" method="POST">
                 @csrf
 
                 <div class="mb-3">

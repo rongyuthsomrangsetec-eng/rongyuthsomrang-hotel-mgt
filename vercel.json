@@ -30,6 +30,8 @@
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
+    "APP_URL": "https://rongyuthsomrang-hotel-mgt.vercel.app",
+    "ASSET_URL": "https://rongyuthsomrang-hotel-mgt.vercel.app",
     "APP_KEY": "base64:xdU/r5hEsjzJdprAn1VKnaHClRuBma+w1hEsmfT2t4o=",
     "APP_CONFIG_CACHE": "/tmp/config.php",
     "APP_EVENTS_CACHE": "/tmp/events.php",
