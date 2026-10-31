@@ -182,6 +182,18 @@
         </div>
 
         <div class="login-body-sct">
+            @auth
+                <div class="alert alert-success bg-success bg-opacity-10 border-0 rounded-3 p-3 mb-3 d-flex align-items-center justify-content-between">
+                    <div>
+                        <small class="text-muted d-block" style="font-size: 0.75rem;">គណនីកំពុងដំណើរការ (Active Session)</small>
+                        <strong class="text-success"><i class="bi bi-person-check-fill me-1"></i> {{ Auth::user()->name }}</strong>
+                    </div>
+                    <a href="{{ route('rooms.index') }}" class="btn btn-sm btn-sct-emerald py-1 px-3 rounded-pill text-decoration-none">
+                        <span>ចូលផ្ទាំងគ្រប់គ្រង &rarr;</span>
+                    </a>
+                </div>
+            @endauth
+
             @if(session('success'))
                 <div class="alert alert-success rounded-3 mb-3 border-0 bg-success bg-opacity-10 text-success small">
                     <i class="bi bi-check-circle-fill me-1"></i> {{ session('success') }}

@@ -11,13 +11,10 @@ class AuthController extends Controller
 {
     /**
      * Show the login form.
+     * Always displays the Login page first.
      */
     public function showLoginForm()
     {
-        if (Auth::check()) {
-            return redirect()->route('rooms.index');
-        }
-
         return view('login');
     }
 
@@ -34,11 +31,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('rooms.index'))->with('success', 'Welcome back! You have successfully logged in.');
+            return redirect()->route('rooms.index')->with('success', 'ស្វាគមន៍ការត្រឡប់មកវិញ! ការចូលប្រើបានជោគជ័យ (Login successful).');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'អ៊ីមែល ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវទេ (Invalid credentials).',
         ])->onlyInput('email');
     }
 
@@ -47,10 +44,6 @@ class AuthController extends Controller
      */
     public function showRegisterForm()
     {
-        if (Auth::check()) {
-            return redirect()->route('rooms.index');
-        }
-
         return view('register');
     }
 
@@ -74,7 +67,7 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('rooms.index')->with('success', 'Account registered successfully! Welcome to Hotel Management System.');
+        return redirect()->route('rooms.index')->with('success', 'ការចុះឈ្មោះគណនីបានជោគជ័យ! សូមស្វាគមន៍មកកាន់ប្រព័ន្ធគ្រប់គ្រងផ្ទះសំណាក់ ចាន់ថន។');
     }
 
     /**
@@ -87,6 +80,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'You have been logged out safely.');
+        return redirect()->route('login')->with('success', 'អ្នកបានចាកចេញពីប្រព័ន្ធដោយសុវត្ថិភាព (Logged out successfully).');
     }
 }
