@@ -131,35 +131,48 @@
                     </a>
                 </div>
 
-                <!-- Delete Button with Modal -->
+                <!-- Delete Button Trigger -->
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDetailModal">
                     <i class="bi bi-trash3 me-1"></i> លុបបន្ទប់ (Delete)
                 </button>
-
-                <div class="modal fade" id="deleteDetailModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content border-0 shadow-lg rounded-4">
-                            <div class="modal-header border-0 bg-danger bg-opacity-10 py-3">
-                                <h5 class="modal-title fw-bold text-danger">បញ្ជាក់ការលុបបន្ទប់</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body text-start py-4 px-4">
-                                តើអ្នកពិតជាចង់លុប <strong>បន្ទប់ {{ $room->room_number }}</strong> ចេញពីប្រព័ន្ធមែនទេ?
-                            </div>
-                            <div class="modal-footer border-0 pt-0 px-4 pb-4">
-                                <button type="button" class="btn btn-sct-outline" data-bs-dismiss="modal">បោះបង់</button>
-                                <form action="{{ route('rooms.destroy', $room) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger fw-semibold px-4 py-2 rounded-3">យល់ព្រមលុប</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
+    </div>
+</div>
+@endsection
+
+@section('modals')
+<!-- Delete Confirmation Modal (Cleanly Placed Outside Main Container) -->
+<div class="modal fade" id="deleteDetailModal" tabindex="-1" aria-labelledby="deleteDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header border-0 bg-danger bg-opacity-10 py-3">
+                <h5 class="modal-title fw-bold text-danger d-flex align-items-center gap-2" id="deleteDetailModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>តើអ្នកពិតជាចង់លុបបន្ទប់ {{ $room->room_number }}?</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-start py-4 px-4">
+                <p class="mb-2 text-dark">
+                    តើអ្នកច្បាស់ទេថានឹងលុប <strong>បន្ទប់ {{ $room->room_number }}</strong> ({{ $room->roomType->name ?? 'ស្តង់ដារ' }}) ចេញពីប្រព័ន្ធ?
+                </p>
+                <div class="alert alert-light border small text-muted mb-0">
+                    <i class="bi bi-info-circle me-1"></i> សកម្មភាពនេះមិនអាចត្រឡប់ក្រោយបានទេ!
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0 px-4 pb-4">
+                <button type="button" class="btn btn-sct-outline" data-bs-dismiss="modal">បោះបង់</button>
+                <form id="showDeleteForm" action="{{ route('rooms.destroy', $room) }}" method="POST" class="d-inline m-0">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger fw-semibold px-4 py-2 rounded-3 shadow-sm" onclick="this.disabled=true; this.innerHTML='<span class=\'spinner-border spinner-border-sm me-1\'></span> កំពុងលុប...'; document.getElementById('showDeleteForm').submit();">
+                        <i class="bi bi-trash3-fill me-1"></i> យល់ព្រមលុប
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

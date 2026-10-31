@@ -211,7 +211,7 @@
     </form>
 
     <!-- Table (Slide 7) -->
-    <div class="table-responsive rounded-3 overflow-hidden border">
+    <div class="table-responsive rounded-3 border">
         <table class="table table-sct table-hover align-middle mb-0">
             <thead>
                 <tr>
@@ -288,40 +288,16 @@
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
 
-                                <!-- Delete Button (Triggers Modal) -->
-                                <button type="button" class="action-btn-circle action-btn-delete" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $room->id }}" title="លុបបន្ទប់ (Delete)">
+                                <!-- Delete Button (Triggers Single Global Modal Cleanly) -->
+                                <button type="button" 
+                                        class="action-btn-circle action-btn-delete btn-trigger-delete" 
+                                        data-url="{{ route('rooms.destroy', $room) }}"
+                                        data-room="{{ $room->room_number }}"
+                                        data-type="{{ $room->roomType->name ?? '' }}"
+                                        onclick="openDeleteModal('{{ route('rooms.destroy', $room) }}', 'បន្ទប់ {{ $room->room_number }}', '{{ addslashes($room->roomType->name ?? '') }}')" 
+                                        title="លុបបន្ទប់ (Delete)">
                                     <i class="bi bi-trash3-fill"></i>
                                 </button>
-                            </div>
-
-                            <!-- Delete Confirmation Modal -->
-                            <div class="modal fade" id="deleteModal{{ $room->id }}" tabindex="-1" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
-                                        <div class="modal-header border-0 bg-danger bg-opacity-10 py-3">
-                                            <h5 class="modal-title fw-bold text-danger d-flex align-items-center gap-2">
-                                                <i class="bi bi-exclamation-triangle-fill"></i> តើអ្នកពិតជាចង់លុបបន្ទប់ {{ $room->room_number }}?
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body text-start py-4 px-4">
-                                            <p class="mb-2 text-dark">
-                                                តើអ្នកច្បាស់ទេថានឹងលុប <strong>បន្ទប់ {{ $room->room_number }}</strong> ({{ $room->roomType->name ?? 'ស្តង់ដារ' }}) ចេញពីប្រព័ន្ធ?
-                                            </p>
-                                            <div class="alert alert-light border small text-muted mb-0">
-                                                <i class="bi bi-info-circle me-1"></i> សកម្មភាពនេះមិនអាចត្រឡប់ក្រោយបានទេ!
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer border-0 pt-0 px-4 pb-4">
-                                            <button type="button" class="btn btn-sct-outline" data-bs-dismiss="modal">បោះបង់</button>
-                                            <form action="{{ route('rooms.destroy', $room) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger fw-semibold px-4 py-2 rounded-3">យល់ព្រមលុប</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </td>
                     </tr>
@@ -361,7 +337,41 @@
     </div>
 
 </div>
+@endsection
 
+@section('modals')
+<!-- Single Global Delete Confirmation Modal (Cleanly Placed Outside Main Container) -->
+<div class="modal fade" id="globalDeleteModal" tabindex="-1" aria-labelledby="globalDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header border-0 bg-danger bg-opacity-10 py-3">
+                <h5 class="modal-title fw-bold text-danger d-flex align-items-center gap-2" id="globalDeleteModalLabel">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>តើអ្នកពិតជាចង់លុប <span id="modalRoomTitle"></span>?</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-start py-4 px-4">
+                <p class="mb-2 text-dark">
+                    តើអ្នកច្បាស់ទេថានឹងលុប <strong id="modalRoomFullDesc" class="text-danger"></strong> ចេញពីប្រព័ន្ធ?
+                </p>
+                <div class="alert alert-light border small text-muted mb-0">
+                    <i class="bi bi-info-circle me-1"></i> សកម្មភាពនេះមិនអាចត្រឡប់ក្រោយបានទេ!
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0 px-4 pb-4">
+                <button type="button" class="btn btn-sct-outline" data-bs-dismiss="modal">បោះបង់</button>
+                <form id="globalDeleteForm" action="" method="POST" class="d-inline m-0">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" id="confirmDeleteSubmitBtn" class="btn btn-danger fw-semibold px-4 py-2 rounded-3 shadow-sm" onclick="submitDeleteForm(this)">
+                        <i class="bi bi-trash3-fill me-1"></i> យល់ព្រមលុប
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -389,6 +399,58 @@
 
             requestAnimationFrame(updateCount);
         });
+
+        // Event listener for delete buttons
+        document.querySelectorAll('.btn-trigger-delete').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('data-url');
+                const room = this.getAttribute('data-room');
+                const type = this.getAttribute('data-type');
+                openDeleteModal(url, 'បន្ទប់ ' + room, type);
+            });
+        });
     });
+
+    // Global Delete Modal Controller
+    function openDeleteModal(url, roomNumber, roomType) {
+        const form = document.getElementById('globalDeleteForm');
+        if (form) form.action = url;
+
+        const titleEl = document.getElementById('modalRoomTitle');
+        if (titleEl) titleEl.innerText = roomNumber;
+
+        const descEl = document.getElementById('modalRoomFullDesc');
+        if (descEl) descEl.innerText = roomNumber + (roomType ? ' (' + roomType + ')' : '');
+
+        // Reset submit button state
+        const submitBtn = document.getElementById('confirmDeleteSubmitBtn');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bi bi-trash3-fill me-1"></i> យល់ព្រមលុប';
+        }
+
+        const modalEl = document.getElementById('globalDeleteModal');
+        if (modalEl) {
+            const modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modalInstance.show();
+        }
+    }
+
+    // Direct Form Submission
+    function submitDeleteForm(btn) {
+        const form = document.getElementById('globalDeleteForm');
+        if (!form || !form.action) {
+            alert('កំហុស៖ មិនអាចរកឃើញទិន្នន័យបន្ទប់ដើម្បីលុបបានទេ។');
+            return;
+        }
+
+        if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span> កំពុងលុប...';
+        }
+
+        form.submit();
+    }
 </script>
 @endsection

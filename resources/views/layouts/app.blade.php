@@ -52,9 +52,9 @@
         }
 
         /* Ambient Animations */
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: translateY(15px) scale(0.99); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes fadeInSct {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: none; }
         }
 
         @keyframes pulseDot {
@@ -63,7 +63,7 @@
         }
 
         .animate-sct-entrance {
-            animation: fadeInScale 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeInSct 0.3s ease-out;
         }
 
         /* Gold SCT Crest Emblem */
@@ -811,6 +811,8 @@
             </div>
         </div>
     </footer>
+
+    @yield('modals')
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

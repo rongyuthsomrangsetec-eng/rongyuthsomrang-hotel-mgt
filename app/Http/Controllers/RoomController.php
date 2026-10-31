@@ -144,6 +144,6 @@ class RoomController extends Controller
         $roomNumber = $room->room_number;
         $room->delete();
 
-        return redirect()->route('rooms.index')->with('success', "Room {$roomNumber} deleted successfully!");
+        return redirect()->route('rooms.index')->with('success', "បានលុបបន្ទប់ {$roomNumber} ដោយជោគជ័យ (Room {$roomNumber} deleted successfully)!");
     }
 }
