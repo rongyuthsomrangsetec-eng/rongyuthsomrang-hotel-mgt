@@ -8,45 +8,45 @@ use Illuminate\Database\Seeder;
 class RoomTypeSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeds for SCT Chan Thorn Resort.
      */
     public function run(): void
     {
         $types = [
             [
-                'name' => 'Standard Single',
+                'name' => 'Standard Wooden Bungalow (បឹងហ្គាឡូស្តង់ដារ)',
+                'base_price' => 25.00,
+                'capacity' => 2,
+                'description' => 'Colorful wooden garden bungalow with queen bed, AC, high-speed WiFi, private bathroom, and peaceful nature ambiance.',
+            ],
+            [
+                'name' => 'Deluxe Nature Villa (វីឡាធម្មជាតិឌីឡាក់)',
+                'base_price' => 35.00,
+                'capacity' => 2,
+                'description' => 'Modern room with king-size bed, illuminated walkway view, smart TV, hot shower, and direct garden access.',
+            ],
+            [
+                'name' => 'Modern VIP Suite (បន្ទប់ VIP ទំនើប)',
                 'base_price' => 45.00,
-                'capacity' => 1,
-                'description' => 'Cozy room with single bed, desk, private bathroom, and high-speed Wi-Fi.',
-            ],
-            [
-                'name' => 'Deluxe Double',
-                'base_price' => 85.00,
                 'capacity' => 2,
-                'description' => 'Spacious room with queen-sized bed, city view, mini-bar, and smart TV.',
+                'description' => 'Premium VIP room featuring backlit halo LED mirror, workstation, flat-screen Smart TV, minibar, and complimentary coffee.',
             ],
             [
-                'name' => 'Executive King',
-                'base_price' => 135.00,
-                'capacity' => 2,
-                'description' => 'Luxury king bed, executive lounge access, work station, and espresso machine.',
-            ],
-            [
-                'name' => 'Family Suite',
-                'base_price' => 210.00,
+                'name' => 'Family Garden Cottage (ផ្ទះគ្រួសារសួនច្បារ)',
+                'base_price' => 65.00,
                 'capacity' => 4,
-                'description' => 'Two connected bedrooms, kitchenette, living room, and children play corner.',
+                'description' => 'Spacious cottage with two queen beds, private terrace, family seating area, refrigerator, and close to 24h secured parking.',
             ],
             [
-                'name' => 'Presidential Penthouse',
-                'base_price' => 450.00,
-                'capacity' => 6,
-                'description' => 'Top floor panoramic sea view, private jacuzzi, butler service, and private dining area.',
+                'name' => 'Executive Green Villa (បឹងហ្គាឡូអេកស៊ិកឃ្យូធីវ)',
+                'base_price' => 55.00,
+                'capacity' => 3,
+                'description' => 'Stand-alone luxury bungalow, serene nature atmosphere, open wardrobe rack, fast WiFi, and quiet resort surroundings.',
             ],
         ];
 
         foreach ($types as $type) {
-            RoomType::firstOrCreate(['name' => $type['name']], $type);
+            RoomType::updateOrCreate(['name' => $type['name']], $type);
         }
     }
 }

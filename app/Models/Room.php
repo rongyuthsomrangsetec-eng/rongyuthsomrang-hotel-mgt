@@ -71,3 +71,4 @@ class Room extends Model
         return $query->where('status', $status);
     }
 }
+

@@ -45,3 +45,4 @@ class ShowHotelData extends Command
         return Command::SUCCESS;
     }
 }
+
