@@ -51,3 +51,4 @@ $_ENV['LOG_CHANNEL'] = 'stderr';
 
 // 4. Forward to Laravel front controller
 require __DIR__ . '/../public/index.php';
+
