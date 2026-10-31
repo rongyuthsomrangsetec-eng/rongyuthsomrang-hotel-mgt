@@ -21,6 +21,11 @@
         </div>
 
         <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-outline-light d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#contactModal">
+                <i class="bi bi-chat-dots-fill text-warning"></i>
+                <span>ទំនាក់ទំនង (5.5K FB)</span>
+            </button>
+
             <button type="button" class="btn btn-outline-light d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#locationQrModal">
                 <i class="bi bi-qr-code-scan text-warning"></i>
                 <span>QR ទីតាំង</span>
@@ -64,56 +69,62 @@
     </div>
 </div>
 
-<!-- Poster Amenities & Location QR Widget -->
-<div class="card card-sct p-3 mb-4">
+<!-- Facebook Page & Official Social Connect Banner -->
+<div class="card card-sct p-3 mb-4 bg-white border">
     <div class="row align-items-center g-3">
-        <div class="col-lg-9 col-md-8">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-success bg-opacity-10 text-success p-2 rounded-circle">
-                    <i class="bi bi-tree-fill"></i>
-                </span>
-                <strong class="text-dark">សេវាកម្ម និងបរិក្ខារលេចធ្លោ (Hotel Highlights)</strong>
-                <span class="text-muted small">&bull; ទីតាំង៖ ជិតវិទ្យាល័យស្វាយរៀង ទីរួមខេត្តស្វាយរៀង</span>
-            </div>
-
-            <div class="d-flex flex-wrap gap-2">
-                <div class="amenity-pill">
-                    <i class="bi bi-check-circle-fill text-success"></i>
-                    <span>បន្ទប់ស្អាត មានផាសុកភាព</span>
-                </div>
-                <div class="amenity-pill">
-                    <i class="bi bi-wifi text-primary"></i>
-                    <span>WiFi រហ័សទាន់ចិត្ត</span>
-                </div>
-                <div class="amenity-pill">
-                    <i class="bi bi-cup-hot-fill text-danger"></i>
-                    <span>កាហ្វេ & អាហារដ្ឋាន</span>
-                </div>
-                <div class="amenity-pill">
-                    <i class="bi bi-car-front-fill text-info"></i>
-                    <span>ចំណតរថយន្ត ធំទូលាយ</span>
-                </div>
-                <div class="amenity-pill">
-                    <i class="bi bi-camera-video-fill text-secondary"></i>
-                    <span>សុវត្ថិភាព 24 ម៉ោង (CCTV)</span>
+        <div class="col-lg-7 col-md-6">
+            <div class="d-flex align-items-center gap-3">
+                <img src="{{ asset('images/sct-night-resort.png') }}" alt="ផ្ទះសំណាក់ ចាន់ថន" class="rounded-circle border border-2 border-success shadow-sm" style="width: 58px; height: 58px; object-fit: cover;">
+                <div>
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="fw-bold text-dark mb-0">ផ្ទះសំណាក់ ចាន់ថន</h5>
+                        <i class="bi bi-patch-check-fill text-primary" title="Facebook Page"></i>
+                    </div>
+                    <div class="text-muted small mt-1">
+                        <span class="badge bg-primary bg-opacity-10 text-primary fw-bold me-1">5.5K followers</span>
+                        <span>&bull; Digital creator &bull; Phnom Penh &bull; Svay Rieng Province</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-3 col-md-4 text-center text-md-end border-start-md">
-            <div class="d-inline-flex align-items-center gap-3 p-2 bg-light rounded-3 border">
-                <a href="#locationQrModal" data-bs-toggle="modal" title="Click to view QR code">
-                    <img src="{{ asset('images/sct-location-qr.png') }}" alt="Location QR" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+        <div class="col-lg-5 col-md-6 text-md-end">
+            <div class="d-flex flex-wrap gap-2 justify-content-md-end">
+                <a href="tel:067636262" class="btn btn-sm btn-outline-success rounded-pill px-3 fw-semibold">
+                    <i class="bi bi-telephone-fill me-1"></i> 067 636 262
                 </a>
-                <div class="text-start">
-                    <small class="d-block fw-bold text-dark" style="font-size: 0.8rem; line-height: 1.2;">ស្កេនរកទីតាំង</small>
-                    <small class="text-muted" style="font-size: 0.72rem;">Google Maps Location</small>
-                    <a href="#locationQrModal" data-bs-toggle="modal" class="d-block text-success fw-bold text-decoration-none mt-1" style="font-size: 0.75rem;">
-                        <i class="bi bi-arrows-fullscreen me-1"></i> ពង្រីក QR
-                    </a>
-                </div>
+                <button type="button" class="btn btn-sm btn-facebook rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#contactModal">
+                    <i class="bi bi-messenger me-1"></i> ផ្ញើសារ (Message)
+                </button>
+                <button type="button" class="btn btn-sm btn-sct-gold rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#locationQrModal">
+                    <i class="bi bi-qr-code-scan me-1"></i> QR ទីតាំង
+                </button>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Poster Amenities Highlight Strip -->
+<div class="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-4 p-2 bg-white rounded-4 border shadow-sm">
+    <div class="amenity-pill">
+        <i class="bi bi-check-circle-fill text-success"></i>
+        <span>បន្ទប់ស្អាត មានផាសុកភាព</span>
+    </div>
+    <div class="amenity-pill">
+        <i class="bi bi-wifi text-primary"></i>
+        <span>WiFi រហ័សទាន់ចិត្ត</span>
+    </div>
+    <div class="amenity-pill">
+        <i class="bi bi-cup-hot-fill text-danger"></i>
+        <span>កាហ្វេ & អាហារដ្ឋាន</span>
+    </div>
+    <div class="amenity-pill">
+        <i class="bi bi-car-front-fill text-info"></i>
+        <span>ចំណតរថយន្ត ធំទូលាយ</span>
+    </div>
+    <div class="amenity-pill">
+        <i class="bi bi-camera-video-fill text-secondary"></i>
+        <span>សុវត្ថិភាព 24 ម៉ោង (CCTV)</span>
     </div>
 </div>
 

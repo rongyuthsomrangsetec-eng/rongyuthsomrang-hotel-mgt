@@ -24,6 +24,7 @@
             --sct-gold: #d4af37;
             --sct-gold-light: #f5e7b2;
             --sct-gold-dark: #a67c1e;
+            --sct-facebook-blue: #1877f2;
             --sct-gold-gradient: linear-gradient(135deg, #f6e27a 0%, #d4af37 50%, #aa771c 100%);
             --sct-emerald-gradient: linear-gradient(145deg, #062c21 0%, #0d4637 55%, #155e4b 100%);
             --sct-bg: #f8faf8;
@@ -54,11 +55,6 @@
         @keyframes fadeInScale {
             from { opacity: 0; transform: translateY(15px) scale(0.99); }
             to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @keyframes goldGlow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
-            50% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
         }
 
         @keyframes pulseDot {
@@ -132,7 +128,7 @@
             background: var(--sct-emerald-dark);
             color: var(--sct-gold-light);
             font-size: 0.8rem;
-            padding: 0.4rem 0;
+            padding: 0.45rem 0;
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
         }
 
@@ -304,6 +300,26 @@
             background: var(--sct-mint);
         }
 
+        .btn-facebook {
+            background: #1877f2;
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.7rem 1.4rem;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-facebook:hover {
+            background: #1464cc;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(24, 119, 242, 0.35);
+        }
+
         /* Modern Card */
         .card-sct {
             background: #ffffff;
@@ -436,12 +452,22 @@
             outline: none;
         }
 
+        /* Facebook Profile Header Card */
+        .fb-profile-avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: 3px solid #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            object-fit: cover;
+        }
+
         /* Footer */
         .footer-sct {
             margin-top: auto;
             background: #ffffff;
             border-top: 1px solid #e2e8f0;
-            padding: 1.5rem 0;
+            padding: 1.75rem 0;
             font-size: 0.9rem;
             color: #64748b;
         }
@@ -460,8 +486,12 @@
                 <span><i class="bi bi-tree-fill text-success me-1"></i> បទពិសោធន៍សម្រាកលំហែបែបធម្មជាតិ 🌿</span>
             </div>
             <div class="d-flex align-items-center gap-3">
+                <a href="#contactModal" data-bs-toggle="modal" class="text-white text-decoration-none fw-semibold">
+                    <i class="bi bi-chat-dots-fill text-warning me-1"></i> ទំនាក់ទំនង (Contact & FB)
+                </a>
+                <span class="opacity-50">|</span>
                 <a href="#locationQrModal" data-bs-toggle="modal" class="text-warning text-decoration-none fw-semibold">
-                    <i class="bi bi-qr-code-scan me-1"></i> ស្កេនរកទីតាំង (QR Code)
+                    <i class="bi bi-qr-code-scan me-1"></i> ស្កេនទីតាំង (QR)
                 </a>
                 <span class="opacity-50">|</span>
                 <span><i class="bi bi-telephone-fill text-warning me-1"></i> <strong>067 636 262 / 010 824 444</strong></span>
@@ -501,13 +531,19 @@
                 </ul>
 
                 <div class="d-flex align-items-center gap-2">
-                    <!-- Location QR Modal Trigger Button -->
-                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#locationQrModal">
-                        <i class="bi bi-qr-code-scan"></i>
-                        <span>QR ទីតាំង (Location)</span>
+                    <!-- Contact & Social Modal Trigger -->
+                    <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#contactModal">
+                        <i class="bi bi-chat-dots-fill text-primary"></i>
+                        <span>ទំនាក់ទំនង (Contact)</span>
                     </button>
 
-                    <div class="d-flex align-items-center gap-2 bg-light px-3 py-1 rounded-pill border">
+                    <!-- Location QR Modal Trigger -->
+                    <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-semibold d-flex align-items-center gap-1 shadow-sm" data-bs-toggle="modal" data-bs-target="#locationQrModal">
+                        <i class="bi bi-qr-code-scan"></i>
+                        <span>QR ទីតាំង</span>
+                    </button>
+
+                    <div class="d-flex align-items-center gap-2 bg-light px-3 py-1 rounded-pill border ms-1">
                         <span class="status-dot-pulse-sct"></span>
                         <i class="bi bi-person-circle text-success"></i>
                         <span class="fw-semibold text-dark small">{{ Auth::user()->name }}</span>
@@ -559,7 +595,114 @@
         </div>
     </main>
 
-    <!-- Location QR Code Modal (Slide-up Interactive Lightbox) -->
+    <!-- Comprehensive Contact & Facebook Social Modal -->
+    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <!-- Header with Night Resort Banner -->
+                <div class="p-4 text-white position-relative" style="background: var(--sct-emerald-gradient);">
+                    <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="{{ asset('images/sct-night-resort.png') }}" alt="ផ្ទះសំណាក់ ចាន់ថន" class="fb-profile-avatar">
+                        <div>
+                            <div class="d-flex align-items-center gap-2">
+                                <h4 class="fw-bold mb-0 text-white">ផ្ទះសំណាក់ ចាន់ថន</h4>
+                                <i class="bi bi-patch-check-fill text-warning fs-5" title="Verified Resort Page"></i>
+                            </div>
+                            <div class="text-white-50 small mt-1">
+                                <i class="bi bi-people-fill text-warning me-1"></i> <strong>5.5K followers</strong> &bull; 349 following
+                            </div>
+                            <div class="badge bg-white bg-opacity-20 text-white px-2 py-1 rounded-pill mt-1 small">
+                                Digital Creator &bull; Hotel & Resort
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body p-4">
+                    <!-- Location Tags from Facebook -->
+                    <div class="p-3 bg-light rounded-3 mb-3 border">
+                        <div class="fw-bold text-dark mb-1 d-flex align-items-center gap-1">
+                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                            <span>ទីតាំង និងតំបន់គ្របដណ្តប់៖</span>
+                        </div>
+                        <div class="d-flex flex-wrap gap-1 text-muted small mt-2">
+                            <span class="badge bg-white text-dark border"><i class="bi bi-pin-map text-success me-1"></i> Phnom Penh</span>
+                            <span class="badge bg-white text-dark border"><i class="bi bi-pin-map text-success me-1"></i> Svay Reang</span>
+                            <span class="badge bg-white text-dark border"><i class="bi bi-pin-map text-success me-1"></i> svay rieng</span>
+                            <span class="badge bg-white text-dark border"><i class="bi bi-pin-map text-success me-1"></i> Svay Reang Province!</span>
+                        </div>
+                        <div class="small text-muted mt-2">
+                            <strong>អាសយដ្ឋានជាក់ស្តែង៖</strong> ជិតវិទ្យាល័យស្វាយរៀង ទីរួមខេត្តស្វាយរៀង
+                        </div>
+                    </div>
+
+                    <!-- Direct Contact Buttons -->
+                    <h6 class="fw-bold text-dark mb-2">ទំនាក់ទំនងបន្ទាន់ (Quick Contacts)៖</h6>
+
+                    <div class="list-group mb-3">
+                        <a href="tel:067636262" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 rounded-3 border mb-2">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="bg-success text-white rounded-circle p-2 d-inline-flex" style="width: 38px; height: 38px; align-items: center; justify-content: center;">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </span>
+                                <div>
+                                    <strong class="d-block text-dark">067 636 262</strong>
+                                    <small class="text-muted">Metfone / Smart (Call Now)</small>
+                                </div>
+                            </div>
+                            <span class="btn btn-sm btn-outline-success rounded-pill px-3">Call</span>
+                        </a>
+
+                        <a href="tel:010824444" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 rounded-3 border mb-2">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="bg-success text-white rounded-circle p-2 d-inline-flex" style="width: 38px; height: 38px; align-items: center; justify-content: center;">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </span>
+                                <div>
+                                    <strong class="d-block text-dark">010 824 444</strong>
+                                    <small class="text-muted">Smart (Call Now)</small>
+                                </div>
+                            </div>
+                            <span class="btn btn-sm btn-outline-success rounded-pill px-3">Call</span>
+                        </a>
+
+                        <a href="tel:010482345" class="list-group-item list-group-item-action d-flex align-items-center justify-content-between p-3 rounded-3 border">
+                            <div class="d-flex align-items-center gap-3">
+                                <span class="bg-success text-white rounded-circle p-2 d-inline-flex" style="width: 38px; height: 38px; align-items: center; justify-content: center;">
+                                    <i class="bi bi-telephone-fill"></i>
+                                </span>
+                                <div>
+                                    <strong class="d-block text-dark">010 482 345</strong>
+                                    <small class="text-muted">Smart (Call Now)</small>
+                                </div>
+                            </div>
+                            <span class="btn btn-sm btn-outline-success rounded-pill px-3">Call</span>
+                        </a>
+                    </div>
+
+                    <!-- Facebook & Messenger Action Buttons -->
+                    <div class="row g-2">
+                        <div class="col-6">
+                            <a href="https://www.facebook.com" target="_blank" class="btn btn-facebook w-100 py-2 justify-content-center">
+                                <i class="bi bi-messenger"></i>
+                                <span>Message FB</span>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <button type="button" class="btn btn-sct-gold w-100 py-2 justify-content-center" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#locationQrModal">
+                                <i class="bi bi-qr-code-scan"></i>
+                                <span>ស្កេនរកទីតាំង</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location QR Code Modal -->
     <div class="modal fade" id="locationQrModal" tabindex="-1" aria-labelledby="locationQrModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
@@ -597,7 +740,7 @@
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-tree-fill text-success"></i>
-                            <span>បរិយាកាសស្ងប់ស្ងាត់ ស្រស់ស្រាយ បែបធម្មជាតិ</span>
+                            <span>Facebook៖ ផ្ទះសំណាក់ ចាន់ថន (5.5K Followers)</span>
                         </div>
                     </div>
 
@@ -634,12 +777,36 @@
 
     <footer class="footer-sct text-center">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+            <div class="row align-items-center g-3 mb-3">
+                <div class="col-md-4 text-md-start">
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="{{ asset('images/sct-night-resort.png') }}" alt="Avatar" class="rounded-circle border" style="width: 42px; height: 42px; object-fit: cover;">
+                        <div>
+                            <strong class="d-block text-dark">ផ្ទះសំណាក់ ចាន់ថន</strong>
+                            <small class="text-primary fw-semibold"><i class="bi bi-facebook me-1"></i> 5.5K Followers on Facebook</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 text-center">
+                    <span class="badge bg-light text-dark border px-3 py-2">
+                        <i class="bi bi-geo-alt-fill text-danger me-1"></i> ទីរួមខេត្តស្វាយរៀង &bull; ជិតវិទ្យាល័យស្វាយរៀង
+                    </span>
+                </div>
+
+                <div class="col-md-4 text-md-end">
+                    <div class="text-muted small">
+                        ទូរស័ព្ទ៖ <strong class="text-dark">067 636 262 / 010 824 444</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-top pt-3 d-flex flex-wrap align-items-center justify-content-between gap-2 small text-muted">
                 <span>
-                    <strong>SCT ផ្ទះសំណាក់ ចាន់ថន</strong> &bull; ទីរួមខេត្តស្វាយរៀង &bull; Final Project Laravel 13
+                    <strong>SCT ផ្ទះសំណាក់ ចាន់ថន</strong> &bull; Laravel 13 Final Project Exam
                 </span>
                 <span>
-                    និស្សិត៖ <strong class="text-dark">Rong Yuthsomrang</strong> &bull; ប្រធានបទ #5 (Hotel Management System)
+                    និស្សិត៖ <strong class="text-dark">Rong Yuthsomrang</strong> &bull; Topic #5 (Hotel Management System)
                 </span>
             </div>
         </div>
