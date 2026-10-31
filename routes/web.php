@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 // The first open page is ALWAYS the Login page
 Route::get('/', [AuthController::class, 'showLoginForm']);
+Route::post('/', [AuthController::class, 'login']);
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
